@@ -1,5 +1,6 @@
 package com.sriyank.javatokotlindemo.activities
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.support.design.widget.NavigationView
 import android.support.v4.widget.DrawerLayout
@@ -24,6 +25,7 @@ import com.sriyank.javatokotlindemo.app.Util
 import com.sriyank.javatokotlindemo.models.Repository
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_display.*
+import kotlinx.android.synthetic.main.header.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,7 +44,7 @@ class DisplayActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         setSupportActionBar(toolbar)
         supportActionBar!!.setTitle("Showing Browsed Results")
-
+        setAppUserName()
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = layoutManager
@@ -69,6 +71,14 @@ class DisplayActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             val githubUser = intent.getStringExtra(Constants.KEY_GITHUB_USER)
             fetchUserRepositories(githubUser)
         }
+    }
+
+    private fun setAppUserName() {
+        val sp=getSharedPreferences(Constants.APP_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+        val personName=sp.getString(Constants.KEY_PERSON_NAME,"user")
+        val headerView=nav_view.getHeaderView(0)
+        headerView.txvName.text=personName
+
     }
 
     private fun fetchUserRepositories(githubUser: String?) {

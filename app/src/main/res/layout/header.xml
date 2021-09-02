@@ -11,7 +11,8 @@
 		android:layout_alignParentBottom="true"
 		android:orientation="vertical"
 		android:paddingBottom="15dp"
-		android:paddingStart="15dp">
+		android:paddingStart="15dp"
+		android:paddingLeft="15dp">
 
 		<TextView
 			android:id="@+id/txvEmail"

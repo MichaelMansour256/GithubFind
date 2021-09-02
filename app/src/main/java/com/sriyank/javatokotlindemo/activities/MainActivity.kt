@@ -1,5 +1,6 @@
 package com.sriyank.javatokotlindemo.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
@@ -24,6 +25,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun saveName(view: View) {
+        if (isNotEmpty(etName,inputLayoutName)){
+            val personName=etName.text.toString()
+            val sp=getSharedPreferences(Constants.APP_SHARED_PREFERENCES,Context.MODE_PRIVATE)
+            val editor=sp.edit()
+            editor.putString(Constants.KEY_PERSON_NAME,personName)
+            editor.apply()
+        }
 
     }
 
