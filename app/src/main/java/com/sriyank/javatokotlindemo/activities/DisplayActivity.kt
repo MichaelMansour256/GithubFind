@@ -55,12 +55,13 @@ class DisplayActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val intent = intent
         if (intent.getIntExtra(Constants.KEY_QUERY_TYPE, -1) == Constants.SEARCH_BY_REPO) {
-            val queryRepo = intent.getStringExtra(Constants.KEY_REPO_SEARCH)!!
-            val repoLanguage = intent.getStringExtra(Constants.KEY_LANGUAGE)!!
-            fetchRepositories(queryRepo, repoLanguage)
+
+            val queryRepo = intent.getStringExtra(Constants.KEY_REPO_SEARCH)
+            val repoLanguage = intent.getStringExtra(Constants.KEY_LANGUAGE)
+            fetchRepositories(queryRepo!!, repoLanguage!!)
         } else {
-            val githubUser = intent.getStringExtra(Constants.KEY_GITHUB_USER)!!
-            fetchUserRepositories(githubUser)
+            val githubUser = intent.getStringExtra(Constants.KEY_GITHUB_USER)
+            fetchUserRepositories(githubUser!!)
         }
     }
 
@@ -80,7 +81,8 @@ class DisplayActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             override fun onResponse(call: Call<List<Repository>>?, response: Response<List<Repository>>) {
 
                 if (response.isSuccessful) {
-                    Log.i(TAG, "posts loaded from API $response")
+
+                    Log.i(TAG, "posts loaded from API " + response)
 
                     response.body()?.let {
                         browsedRepositories = it
@@ -93,7 +95,8 @@ class DisplayActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     }
 
                 } else {
-                    Log.i(TAG, "Error $response")
+
+                    Log.i(TAG, "Error " + response)
                     Util.showErrorMessage(this@DisplayActivity, response.errorBody()!!)
                 }
             }
@@ -110,13 +113,14 @@ class DisplayActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val query = HashMap<String, String>()
 
         if (repoLanguage.isNotEmpty())
-            queryRepo += " language:$repoLanguage"
-        query["q"] = queryRepo
+            queryRepo += " language:" + repoLanguage
+        query.put("q", queryRepo)
 
         githubAPIService.searchRepositories(query).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                 if (response.isSuccessful) {
-                    Log.i(TAG, "posts loaded from API $response")
+
+                    Log.i(TAG, "posts loaded from API " + response)
 
                     response.body()?.items?.let {
                         browsedRepositories = it
@@ -128,7 +132,7 @@ class DisplayActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         Util.showMessage(this@DisplayActivity, "No Items Found")
 
                 } else {
-                    Log.i(TAG, "error $response")
+                    Log.i(TAG, "error " + response)
                     Util.showErrorMessage(this@DisplayActivity, response.errorBody())
                 }
             }

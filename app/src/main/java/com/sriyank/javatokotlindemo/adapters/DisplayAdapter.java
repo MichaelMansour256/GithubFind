@@ -23,95 +23,96 @@ import io.realm.Realm;
 
 public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.MyViewHolder> {
 
-	private static final String TAG = DisplayAdapter.class.getSimpleName();
 
-	private List<Repository> mData;
-	private LayoutInflater inflater;
-	private Context mContext;
+    private static final String TAG = DisplayAdapter.class.getSimpleName();
 
-	public DisplayAdapter(Context context, List<Repository> items) {
-		inflater = LayoutInflater.from(context);
-		this.mData = items;
-		this.mContext = context;
-	}
+    private List<Repository> mData;
+    private LayoutInflater inflater;
+    private Context mContext;
 
-	@Override
-	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View view = inflater.inflate(R.layout.list_item, parent, false);
-		MyViewHolder holder = new MyViewHolder(view);
-		return holder;
-	}
+    public DisplayAdapter(Context context, List<Repository> items) {
+        inflater = LayoutInflater.from(context);
+        this.mData = items;
+        this.mContext = context;
+    }
 
-	@Override
-	public void onBindViewHolder(MyViewHolder holder, int position) {
-		Repository current = mData.get(position);
-		holder.setData(current, position);
-	}
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.list_item, parent, false);
+        MyViewHolder holder = new MyViewHolder(view);
+        return holder;
+    }
 
-	@Override
-	public int getItemCount() {
-		return mData.size();
-	}
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Repository current = mData.get(position);
+        holder.setData(current, position);
+    }
 
-	public void swap(List<Repository> data)
-	{
-		if (data.size() == 0)
-			Util.showMessage(mContext, "No Items Found");
-		mData = data;
-		notifyDataSetChanged();
-	}
+    @Override
+    public int getItemCount() {
+        return mData.size();
+    }
 
-	class MyViewHolder extends RecyclerView.ViewHolder {
+    public void swap(List<Repository> data)
+    {
+        if (data.size() == 0)
+            Util.showMessage(mContext, "No Items Found");
+        mData = data;
+        notifyDataSetChanged();
+    }
 
-		private TextView name, language, stars, watchers, forks;
-		private int position;
-		private ImageView imgBookmark;
-		private Repository current;
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-		public MyViewHolder(View itemView) {
-			super(itemView);
+        private TextView name, language, stars, watchers, forks;
+        private int position;
+        private ImageView imgBookmark;
+        private Repository current;
 
-			name = itemView.findViewById(R.id.txvName);
-			language = itemView.findViewById(R.id.txvLanguage);
-			stars = itemView.findViewById(R.id.txvStars);
-			watchers = itemView.findViewById(R.id.txvWatchers);
-			forks = itemView.findViewById(R.id.txvForks);
+        public MyViewHolder(View itemView) {
+            super(itemView);
 
-			imgBookmark = itemView.findViewById(R.id.img_bookmark);
-			imgBookmark.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					bookmarkRepository(current);
-				}
-			});
+            name = itemView.findViewById(R.id.txvName);
+            language = itemView.findViewById(R.id.txvLanguage);
+            stars = itemView.findViewById(R.id.txvStars);
+            watchers = itemView.findViewById(R.id.txvWatchers);
+            forks = itemView.findViewById(R.id.txvForks);
 
-			itemView.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String url = current.getHtmlUrl();
-					Uri webpage = Uri.parse(url);
-					Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-					if (intent.resolveActivity(mContext.getPackageManager()) != null) {
-						mContext.startActivity(intent);
-					}
-				}
-			});
-		}
+            imgBookmark = itemView.findViewById(R.id.img_bookmark);
+            imgBookmark.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bookmarkRepository(current);
+                }
+            });
 
-		public void setData(Repository current, int position) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = current.getHtmlUrl();
+                    Uri webpage = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                    if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                        mContext.startActivity(intent);
+                    }
+                }
+            });
+        }
 
-			this.name.setText(current.getName());
-			this.language.setText(String.valueOf(current.getLanguage()));
-			this.forks.setText(String.valueOf(current.getForks()));
-			this.watchers.setText(String.valueOf(current.getWatchers()));
-			this.stars.setText(String.valueOf(current.getStars()));
-			this.position = position;
-			this.current = current;
-		}
+        public void setData(Repository current, int position) {
 
-		private void bookmarkRepository(final Repository current) {
+            this.name.setText(current.getName());
+            this.language.setText(String.valueOf(current.getLanguage()));
+            this.forks.setText(String.valueOf(current.getForks()));
+            this.watchers.setText(String.valueOf(current.getWatchers()));
+            this.stars.setText(String.valueOf(current.getStars()));
+            this.position = position;
+            this.current = current;
+        }
+
+        private void bookmarkRepository(final Repository current) {
 
 
-		}
-	}
+        }
+    }
 }
