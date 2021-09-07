@@ -65,17 +65,6 @@ class MainActivity : AppCompatActivity() {
             return true
         }
     }
-    /*
-    /** Save app username in SharedPreferences  */
-    fun saveName(view: View?) {
-        if (isNotEmpty(etName, inputLayoutName)) {
-            val personName = etName!!.text.toString()
-            val sp = getSharedPreferences(Constants.APP_SHARED_PREFERENCES, MODE_PRIVATE)
-            val editor = sp.edit()
-            editor.putString(Constants.KEY_PERSON_NAME, personName)
-            editor.apply()
-        }
-    }
-    */
+
 
 }
