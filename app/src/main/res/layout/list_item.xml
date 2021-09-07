@@ -115,7 +115,7 @@
 			android:orientation="vertical">
 
 			<ImageView
-				android:id="@+id/img_bookmark"
+				android:id="@+id/imgBookmark"
 				android:layout_width="20dp"
 				android:layout_height="match_parent"
 				android:layout_gravity="center"
