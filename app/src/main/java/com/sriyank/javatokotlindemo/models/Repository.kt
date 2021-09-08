@@ -4,15 +4,16 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-data class Repository(
+open class Repository(
 
-    var id: Int,
-    var name: String?,
-    var language: String?,
-    @SerializedName("html_url") var htmlUrl: String?,
-    var description: String?,
-    @SerializedName("stargazers_count") var stars: Int?,
-    @SerializedName("watchers_count") var watchers: Int?,
-    var forks: Int?,
-    var owner: Owner?
-)
+    @PrimaryKey
+    var id: Int=0,
+    var name: String?=null,
+    var language: String?=null,
+    @SerializedName("html_url") var htmlUrl: String?=null,
+    var description: String?=null,
+    @SerializedName("stargazers_count") var stars: Int?=null,
+    @SerializedName("watchers_count") var watchers: Int?=null,
+    var forks: Int?=null,
+    var owner: Owner?=null
+) : RealmObject()

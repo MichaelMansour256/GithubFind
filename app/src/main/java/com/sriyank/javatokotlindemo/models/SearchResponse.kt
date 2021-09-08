@@ -4,8 +4,8 @@ import io.realm.RealmObject
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmList
 
-data class SearchResponse(
+open class SearchResponse(
 
-    @SerializedName("total_count") var totalCount: Int,
-    var items: List<Repository>?
-)
+    @SerializedName("total_count") var totalCount: Int=0,
+    var items: RealmList<Repository>?=null
+) : RealmObject()

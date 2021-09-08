@@ -10,8 +10,9 @@ import com.sriyank.javatokotlindemo.R
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import com.sriyank.javatokotlindemo.app.Util
+import com.sriyank.javatokotlindemo.app.toast
 import com.sriyank.javatokotlindemo.models.Repository
+import io.realm.Realm
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class DisplayAdapter(context: Context, items: List<Repository>) :
@@ -32,7 +33,7 @@ class DisplayAdapter(context: Context, items: List<Repository>) :
 
 
     fun swap(dataList: List<Repository>) {
-        if (dataList.isEmpty()) Util.showMessage(context, "No Items Found")
+        if (dataList.isEmpty()) context.toast( "No Items Found")
         repositoryList = dataList
         notifyDataSetChanged()
     }
@@ -55,7 +56,15 @@ class DisplayAdapter(context: Context, items: List<Repository>) :
             this.current = current
         }
 
-        private fun bookmarkRepository(current: Repository?) {}
+        private fun bookmarkRepository(current: Repository?) {
+            current?.let {
+                val realm = Realm.getDefaultInstance()
+                realm.executeTransactionAsync (
+                    { realm -> realm.copyToRealmOrUpdate(current) },
+                    { context.toast("bookmarked successfully") },
+                    { context.toast("error occurred") } )
+            }
+        }
 
         init {
 

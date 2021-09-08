@@ -11,6 +11,7 @@ import android.widget.EditText
 import com.sriyank.javatokotlindemo.R
 import com.sriyank.javatokotlindemo.activities.MainActivity
 import com.sriyank.javatokotlindemo.app.Constants
+import com.sriyank.javatokotlindemo.app.isNotEmpty
 import kotlinx.android.synthetic.main.activity_main.*;
 class MainActivity : AppCompatActivity() {
     companion object{
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun saveName(view: View) {
-        if (isNotEmpty(etName,inputLayoutName)){
+        if (etName.isNotEmpty(inputLayoutName)){
             val personName=etName.text.toString()
             val sp=getSharedPreferences(Constants.APP_SHARED_PREFERENCES,Context.MODE_PRIVATE)
             val editor=sp.edit()
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun listRepositories(view: View) {
-        if(isNotEmpty(etRepoName,inputLayoutRepoName)){
+        if(etRepoName.isNotEmpty(inputLayoutRepoName)){
             val queryRepo=etRepoName.text.toString()
             val repoLang=etLanguage.text.toString()
             val intent = Intent(this@MainActivity,DisplayActivity::class.java)
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun listUserRepositories(view: View) {
-        if(isNotEmpty(etGithubUser,inputLayoutGithubUser)){
+        if(etGithubUser.isNotEmpty(inputLayoutGithubUser)){
             val githubUser=etGithubUser.text.toString()
 
             val intent = Intent(this@MainActivity,DisplayActivity::class.java)
@@ -56,15 +57,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
     }
     }
-    fun isNotEmpty(editText: EditText, textInputLayout: TextInputLayout): Boolean {
-        if (editText.text.toString().isEmpty()) {
-            textInputLayout.error = "Cannot be blank !"
-          return false
-        } else {
-            textInputLayout.isErrorEnabled = false
-            return true
-        }
-    }
+
 
 
 }
